@@ -20,18 +20,18 @@
 #include "jtag.h"
 #include "jtag_fuzzer.h"
 #include "storage.h"
-#include "wifi.h"
+// #include "wifi.h"
 
 #define KISS_FUZZER_VERSION "0.9.1-alpha.2"
 
 /* Task priorities as per coding guidelines */
-#define WIFI_TASK_PRIORITY      3  // High
+// #define WIFI_TASK_PRIORITY      3  // High
 #define JTAG_TASK_PRIORITY      2  // Medium
 #define UI_TASK_PRIORITY        1  // Medium/Low
 #define POWER_TASK_PRIORITY     0  // Low
 
 /* Task stack sizes */
-#define WIFI_TASK_STACK_SIZE    4096
+// #define WIFI_TASK_STACK_SIZE    4096
 #define JTAG_TASK_STACK_SIZE    2048
 #define UI_TASK_STACK_SIZE      1024
 #define POWER_TASK_STACK_SIZE   512
@@ -42,7 +42,7 @@ static QueueHandle_t status_queue;
 static SemaphoreHandle_t display_mutex;
 
 /* Task handles */
-static TaskHandle_t wifi_task_handle;
+// static TaskHandle_t wifi_task_handle;
 static TaskHandle_t jtag_task_handle;
 static TaskHandle_t ui_task_handle;
 static TaskHandle_t power_task_handle;
@@ -298,8 +298,8 @@ static void create_tasks(void) {
     BaseType_t result;
     
     // Create Wi-Fi task (High priority)
-    result = xTaskCreate(wifi_task, "WiFi", WIFI_TASK_STACK_SIZE,
-                        NULL, WIFI_TASK_PRIORITY, &wifi_task_handle);
+    // result = xTaskCreate(wifi_task, "WiFi", WIFI_TASK_STACK_SIZE,
+    //                     NULL, WIFI_TASK_PRIORITY, &wifi_task_handle);
     if (result != pdPASS) {
         printf("Failed to create Wi-Fi task\n");
         return;
@@ -360,11 +360,7 @@ int main(void) {
     }
     
     // Initialize Wi-Fi system
-    if (wifi_init(NULL)) {
-        printf("Wi-Fi system initialized successfully\n");
-    } else {
-        printf("Wi-Fi system initialization failed (continuing without Wi-Fi)\n");
-    }
+    // Wi-Fi system skipped
     
     // Initialize task communication
     init_task_communication();
